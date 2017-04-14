@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<style>
+    .panel {
+        margin: 0;
+        border: none;
+        font-family: Arial,​Helvetica,​sans-serif;
+        width: 100%;
+        height:100%;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .panel-body {
+        background-color: #f7fafc ;
+        width: 100%;
+        height: 250px;
+    }
+
+    .row {
+        margin: 10px 0 0;
+        display: flex;
+    }
+
+    .row-item-1 {
+        flex: 1;
+    }
+
+    .row-item-3 {
+        flex: 3;
+    }
+
+    .row-item-4 {
+        flex: 4;
+    }
+
+    .datetimepicker {
+        display:none;!important;
+        width: 250px;
+    }
+
+    .datetimepicker table {
+        margin: 0 auto;
+    }
+
+    .datetimepicker span {
+        height: 26px;
+        line-height: 26px;
+    }
+
+    .calendar-icon {
+        color:#c2c2c2;
+        font-size:large;
+        margin:6px 0;
+    }
+
+    .result-grid {
+        height: 90%;
+        width: 99%;
+        text-align: left;
+    }
+
+    .ui-grid-filter-container .ui-grid-filter-button {
+        top: 16px;
+    }
+
+    .ui-grid-menu-button {
+        height: 53px;
+    }
+
+    .modal-info {
+        color: #31708f;background-color: #d9edf7;border-color: #bce8f1;
+    }
+
+    .modal-danger {
+        color: #a94442;background-color: #f2dede;border-color: #ebccd1;
+    }
+
+    .modal-warning {
+        color: #8a6d3b;background-color: #fcf8e3;border-color: #faebcc;
+    }
+
+    .modal-success {
+        color: #3c763d;background-color: #dff0d8;border-color: #d6e9c6;
+    }
+
+    .text-ignored {
+        color:red;
+    }
+
+    .text-mandatory {
+        color:red;
+        font-size: large;
+    }
+
+    .btn-alm, .btn-alm:focus {
+        color: rgba(255,255,255,0.87);
+        background-color: rgb(16,108,200);
+    }
+
+    .btn-alm:hover {
+        color: rgba(255,255,255,0.87);
+        background-color: rgba(16,108,200,0.8);
+    }
+
+    .loading-mask {
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: hidden;
+        -moz-opacity: 0.5;
+        opacity: .5;
+        width: 100%;
+        height: 100%;
+        zoom: 1;
+        background-color: #bcb1c9;
+    }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+            <h5>Input at least one filed marked with&nbsp;&nbsp;<span class="text-mandatory">*</span></h5>
+        </div>
+        <div style="display:flex;">
+            <div style="flex:1;padding-right: 15px;">
+                <div class="row checkbox-group">
+                    <div class="row-item-1">
+                        <div>
+                            <input id="LODSCheckbox" name="flowType" type="checkbox"  style="margin-right: 5px" ng-model="vm.checkboxLODS" ng-click="vm.selectProject('LODS')" >
+                            <label>LODS</label>
+                        </div>
+                    </div>
+                    <div class="row-item-1">
+                        <div>
+                            <input id="IR4Checkbox" name="flowType" type="checkbox"  style="margin-right: 5px" ng-model="vm.checkboxIR4" ng-click="vm.selectProject('IR4')" >
+                            <label>IR4</label>
+                        </div>
+                    </div>
+                    <div class="row-item-1"></div>
+                </div>
+                <div class="row">
+                    <div class="row-item-1">
+                        <label>UpStream:</label>
+                    </div>
+                    <div class="row-item-4">
+                        <select class="form-control selectBoxStyle" prompt="UpStream" ng-model="vm.L" ng-options ="UpStream as UpStream for UpStream in vm.upStreamForSelect" ng-change="vm.getFlowNameByUpStream()"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row-item-1">
+                        <label>FlowName:&nbsp;&nbsp;<span class="text-mandatory">*</span></label>
+                    </div>
+                    <div class="row-item-4">
+                        <select class="form-control selectBoxStyle" prompt="flowName" ng-model="vm.name" ng-options ="flowName as flowName for flowName in vm.flowNameForSelect"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row-item-1">
+                        <label>Data:&nbsp;&nbsp;<span class="text-mandatory">*</span></label>
+                    </div>
+                    <div class="row-item-4">
+                        <input class="form-control" ng-model="vm.data">
+                    </div>
+                </div>
+            </div>
+
+            <div  style="flex:1.5;">
+                <div class="row">
+                    <label>Records Created Time:&nbsp;&nbsp;<span class="text-mandatory">*</span></label>
+                </div>
+                <div class="row">
+
+                    <label class="row-item-1" style="text-align: center;">From:</label>
+                    <div class="row-item-4" style="position: relative;">
+                        <input id="startDate1" placeholder="createdAtFrom" class="form-control dateTime" type="text" name="startDate1"
+                               ng-model="vm.createdAtFrom"/>
+                        <span class="glyphicon glyphicon-calendar calendar-icon" style="position: absolute;right: 10px;"></span>
+                    </div>
+                    <div class="row-item-3"></div>
+                </div>
+                <div  class="row">
+                    <label class="row-item-1" style="text-align: center;">To:</label>
+                    <div class="row-item-4" style="position: relative;">
+                        <input id="endDate1"  placeholder="createdAtTo" class="col-lg-4 form-control dateTime" type="text" name="endDate1"
+                               ng-model="vm.createdAtTo"/>
+                        <span class="glyphicon glyphicon-calendar calendar-icon" style="position: absolute;right: 10px;"></span>
+                    </div>
+                    <div class="row-item-3"></div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div style="width: 160px;">
+                        <input type="checkbox" style="margin-right: 5px;" ng-model="vm.skipIgnored">
+                        <label>Skip ignored records</label>
+                    </div>
+                    <div class="row-item-1" style="text-align: right;">
+                        <button type="reset" class="btn btn-default" style="width: 80px;margin-right: 10px;" ng-click="vm.resetBtnClick()">Reset</button>
+                        <button type="submit" class="btn btn-alm" style="width: 80px;" ng-click="vm.searchValidation()">Search</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="height: 44px;">
+        <div class="col-lg-1">
+            <button id="ignoreAllBtn" type="button" class="btn btn-alm" style="margin-top: 10px;" ng-if="canUpdate" ng-click="vm.ignoreAllValidation()">Ignore Selected</button>
+        </div>
+    </div>
+
+    <div id="Search Result" style="flex: 1;padding: 10px 10px 0;">
+            <div id="issueRecordUpdateBox" ui-grid="vm.issueRecordGrid" class="result-grid"
+                 ui-grid-edit ui-grid-pagination ui-grid-selection ui-grid-exporter ui-grid-resize-columns
+                 ui-grid-auto-resize>
+            </div>
+    </div>
+
+    <div id="issueRecordDetailModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"  role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="margin-left: 30px; margin-right: 30px;">
+                        <div style="margin-top: 10px">
+                            <h5>_id:</h5>
+                            <input class="form-control" ng-model="vm.recordDetail._id">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Left:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.L">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Right:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.R">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>specFileName:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.specFileName">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>flowName:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.name">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Data:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.data">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Key:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.key">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>dataExtractionFrom:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail['data extraction from']">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>dataExtractionTo:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail['data extraction to']">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>executionTime:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail['execution time']">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>isReprocess:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.isReprocess">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Cleaned:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.cleaned">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Ignore:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.ignore">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>updatedAt:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.updatedAt">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>createdAt:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.createdAt">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>Logs:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.logs">
+                        </div>
+                        <div style="margin-top: 10px">
+                            <h5>__v:</h5>
+                            <input  class="form-control" ng-model="vm.recordDetail.__v">
+                        </div>
+                </div>
+                <div class="modal-footer" style="border-top: none;padding: 0 45px 25px;">
+                    <button id="cancelBtn" type="button" class="btn btn-alm" style="float: right;" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ignoreAllConfirmModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="margin-top: 150px;">
+            <div class="modal-content modal-danger">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="modal-title">Do you confirm to ignore selected records?</h4>
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="ignoreConfirmBtn" type="button" class="btn btn-danger" ng-click="vm.ignoreConfirm()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="selectIssueRecordsModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="margin-top: 150px;">
+            <div class="modal-content modal-warning">
+                <div class="modal-header" style="border-bottom: none;">
+                    <h4 class="modal-title" style="display: inline;">No records selected, please select issue records.</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="ignoreUpdateModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="margin-top: 150px;">
+            <div class="modal-content" ng-class="vm.updateDialogStyle">
+                <div id="ignoreResultModalHeaderBkgColor" class="modal-header" style="border-bottom: none;">
+                    <h4 class="modal-title" style="display: inline;">{{vm.ignoreUpdateResult}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="searchResultModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="margin-top: 150px;">
+            <div class="modal-content" ng-class="vm.searchDialogStyle">
+                <div class="modal-header" style="border-bottom: none;">
+                    <h4 class="modal-title" style="display: inline;">{{vm.searchResult}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="searchValidationModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="margin-top: 150px;">
+            <div class="modal-content modal-info">
+                <div class="modal-header" style="border-bottom: none;">
+                    <h4 class="modal-title" style="display: inline;">{{vm.searchValidationResult}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--
+    <div id="loadingTips" class="loading-mask" style="">
+        <div>
+            loading...
+        </div>
+    </div>-->
+
+</div>
+

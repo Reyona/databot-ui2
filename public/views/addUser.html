@@ -1,0 +1,88 @@
+<style>
+    .datetimepicker {
+        display:none;!important;
+        width: 250px;
+    }
+
+    .modal-info {
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+    }
+
+    .modal-danger {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+
+    .modal-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+
+    .modal-warning {
+        color: #8a6d3b;background-color: #fcf8e3;border-color: #faebcc;
+    }
+
+    .btn-alm, .btn-alm:focus {
+        color: rgba(255,255,255,0.87);
+        background-color: rgb(16,108,200);
+    }
+
+    .btn-alm:hover {
+        color: rgba(255,255,255,0.87);
+        background-color: rgba(16,108,200,0.8);
+    }
+</style>
+<div>
+    <div style="font-weight: bolder; margin-top:10px">
+        <h2 align="left">Add User</h2>
+    </div>
+    <form class="form-horizontal" method="post" ng-controller="addUserCtrl" style="margin-top: 30px">
+        <fieldset>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">User Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" ng-model="user.userName"
+                           placeholder="please input the user name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password:</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" ng-model="user.password"
+                           placeholder="please input the password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">ReadOnly:</label>
+                <div class="col-sm-4">
+                    <div class="switch switch-small">
+                        <input type="checkbox" ng-model="user.readOnly"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-alm" ng-click="reg()">Add</button>
+                </div>
+            </div>
+        </fieldset>
+
+        <div id="addedUserModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="margin-top: 150px;">
+                <div class="modal-content"
+                     ng-class="addUserDialogStyle">
+                    <div id="ignoreResultModalHeaderBkgColor" class="modal-header" style="border-bottom: none;">
+                        <h4 class="modal-title" style="display: inline;">{{message}}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</form>
+</div>

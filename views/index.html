@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html>
+<head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+    <link rel='stylesheet' type="text/css" href='/stylesheets/style.css'/>
+    <!-- Library CSS -->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap-datetimepicker-github/src/css/datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
+
+    <!--Library JS-->
+    <script src="common/ui-grid/csv.js"></script>
+    <script src="common/ui-grid/pdfmake.js"></script>
+    <script src="common/ui-grid/vfs_fonts.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+    <script src="/bower_components/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="/bower_components/angular-bootstrap-datetimepicker-github/src/js/datetimepicker.js"></script>
+    <script src="/bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="/bower_components/ui-select/dist/select.js"></script>
+
+    <!--Application JS-->
+    <script src="/javascripts/databot-module.js"></script>
+    <script src="/config.js"></script>
+    <script src="/javascripts/home-ctrl.js"></script>
+    <script src="/javascripts/login-ctrl.js"></script>
+    <script src="/javascripts/addUser-ctrl.js"></script>
+    <script src="/javascripts/issueRecord-ctrl.js"></script>
+</head>
+<body style="padding: 0;line-height:1.2" ng-app="databot" ng-controller="mainController">
+{{page.title}}
+
+</body>
+<script>
+    var readOnly = '<%= readOnly%>';
+    var role = '<%= role %>';
+    var userName = '<%= userName %>';
+    console.log('role:'+'<%= role %>');
+</script>
+</html>
